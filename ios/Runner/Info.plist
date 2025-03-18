@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to photo library to upload donation proof</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to upload donation proof</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs microphone access to upload donation proof</string>
 </dict>
 </plist>

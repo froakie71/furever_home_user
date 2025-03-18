@@ -91,10 +91,8 @@ class EventScreen extends StatelessWidget {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Icon(Icons.location_on, 
-                            size: 16, 
-                            color: Colors.grey
-                          ),
+                          const Icon(Icons.location_on,
+                              size: 16, color: Colors.grey),
                           const SizedBox(width: 4),
                           Text(
                             _getEventLocation(index),
@@ -120,17 +118,10 @@ class EventScreen extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.orange,
                                 foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
                               ),
                               child: const Text('Register Now'),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.share),
-                            style: IconButton.styleFrom(
-                              backgroundColor: Colors.grey.shade200,
                             ),
                           ),
                         ],
