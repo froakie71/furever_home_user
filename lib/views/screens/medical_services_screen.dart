@@ -48,7 +48,13 @@ class MedicalServicesScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Text('+63 917 123 4567'),
+                      Text(
+                        '+63 123 456 7890',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -57,85 +63,75 @@ class MedicalServicesScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
-          // Available Services Section
+          // Q&A Section
           const Text(
-            'Available Services',
+            'Frequently Asked Questions',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 16),
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
-            children: [
-              _buildServiceCard(
-                'Vaccination',
-                Icons.vaccines,
-                'Protect your pet',
-                Colors.blue,
-              ),
-              _buildServiceCard(
-                'Check-up',
-                Icons.health_and_safety,
-                'Regular wellness',
-                Colors.green,
-              ),
-              _buildServiceCard(
-                'Surgery',
-                Icons.medical_services,
-                'Special procedures',
-                Colors.purple,
-              ),
-              _buildServiceCard(
-                'Dental Care',
-                Icons.cleaning_services,
-                'Oral health',
-                Colors.orange,
-              ),
-            ],
-          ),
+
+          // Q&A Items
+          ...qaItems.map((qa) => _buildQAItem(qa)).toList(),
         ],
       ),
     );
   }
 
-  Widget _buildServiceCard(
-      String title, IconData icon, String description, Color color) {
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: color, width: 4)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 40, color: color),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              description,
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 12,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+  Widget _buildQAItem(Map<String, String> qa) {
+    return ExpansionTile(
+      title: Text(
+        qa['question']!,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
         ),
       ),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          width: double.infinity,
+          color: Colors.grey[50],
+          child: Text(
+            qa['answer']!,
+            style: const TextStyle(
+              fontSize: 14,
+              height: 1.5,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
+
+// Q&A Data
+final List<Map<String, String>> qaItems = [
+  {
+    'question': 'What vaccinations does my dog need?',
+    'answer':
+        'Core vaccinations for dogs include: Rabies, Distemper, Parvovirus, and Adenovirus. The vaccination schedule starts at 6-8 weeks of age with boosters every 3-4 weeks until 16 weeks old. Annual boosters may be required depending on the vaccine and your dog\'s risk factors.',
+  },
+  {
+    'question': 'How often should I deworm my dog?',
+    'answer':
+        'Puppies should be dewormed every 2 weeks until 12 weeks of age, then monthly until 6 months old. Adult dogs should be dewormed every 3-6 months, depending on their lifestyle and risk of exposure.',
+  },
+  {
+    'question': 'What are signs that my dog needs immediate medical attention?',
+    'answer':
+        'Seek immediate veterinary care if you notice: difficulty breathing, severe bleeding, seizures, collapse, severe vomiting or diarrhea, inability to urinate, bloated abdomen, or signs of extreme pain. These could indicate serious medical conditions requiring emergency treatment.',
+  },
+  {
+    'question': 'How often should I bring my dog for check-ups?',
+    'answer':
+        'Healthy adult dogs should have a check-up at least once a year. Puppies need more frequent visits for vaccinations and monitoring growth. Senior dogs (7+ years) should have check-ups every 6 months. Dogs with chronic conditions may need more frequent visits as recommended by your vet.',
+  },
+  {
+    'question': 'What preventive care does my dog need?',
+    'answer':
+        'Regular preventive care includes: vaccinations, parasite prevention (fleas, ticks, heartworm), dental cleaning, regular exercise, proper nutrition, and weight management. Your vet can provide a personalized preventive care plan based on your dog\'s age, breed, and health status.',
+  },
+];

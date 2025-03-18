@@ -133,45 +133,45 @@ class _DonationScreenState extends State<DonationScreen> {
                         Center(
                           child: Stack(
                             children: [
-                              Container(
-                                width: 120,
-                                height: 120,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: _image != null
-                                    ? ClipOval(
-                                        child: Image.file(
-                                          _image!,
-                                          width: 120,
-                                          height: 120,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )
-                                    : const Icon(
-                                        Icons.pets,
-                                        size: 50,
-                                        color: Colors.grey,
-                                      ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  radius: 18,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.add_a_photo,
-                                      size: 18,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: _uploadImage,
-                                  ),
-                                ),
-                              ),
+                              // Container(
+                              //   width: 120,
+                              //   height: 120,
+                              //   decoration: BoxDecoration(
+                              //     color: Colors.grey[200],
+                              //     shape: BoxShape.circle,
+                              //   ),
+                              //   child: _image != null
+                              //       ? ClipOval(
+                              //           child: Image.file(
+                              //             _image!,
+                              //             width: 120,
+                              //             height: 120,
+                              //             fit: BoxFit.cover,
+                              //           ),
+                              //         )
+                              //       : const Icon(
+                              //           Icons.pets,
+                              //           size: 50,
+                              //           color: Colors.grey,
+                              //         ),
+                              // ),
+                              // Positioned(
+                              //   bottom: 0,
+                              //   right: 0,
+                              //   child: CircleAvatar(
+                              //     backgroundColor:
+                              //         Theme.of(context).primaryColor,
+                              //     radius: 18,
+                              //     child: IconButton(
+                              //       icon: const Icon(
+                              //         Icons.add_a_photo,
+                              //         size: 18,
+                              //         color: Colors.white,
+                              //       ),
+                              //       onPressed: _uploadImage,
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
