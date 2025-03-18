@@ -82,12 +82,6 @@ class AdoptedDogsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.more_vert),
-                        onPressed: () {
-                          _showDogOptions(context, index);
-                        },
-                      ),
                     ),
                     const Divider(height: 0),
                     Padding(
@@ -98,16 +92,11 @@ class AdoptedDogsScreen extends StatelessWidget {
                           _buildActionButton(
                             Icons.medical_services,
                             'Medical Records',
-                            () {},
+                            () => _showMedicalRecords(context, index),
                           ),
                           _buildActionButton(
                             Icons.calendar_month,
                             'Schedule Checkup',
-                            () {},
-                          ),
-                          _buildActionButton(
-                            Icons.photo_library,
-                            'Photos',
                             () {},
                           ),
                         ],
@@ -177,7 +166,7 @@ class AdoptedDogsScreen extends StatelessWidget {
     );
   }
 
-  void _showDogOptions(BuildContext context, int index) {
+  void _showMedicalRecords(BuildContext context, int index) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -185,34 +174,85 @@ class AdoptedDogsScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ListTile(
-                leading: const Icon(Icons.edit),
-                title: const Text('Edit Details'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Navigate to edit screen
-                },
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  '${_getDogName(index)}\'s Medical Records',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              ListTile(
-                leading: const Icon(Icons.share),
-                title: const Text('Share Story'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Implement share functionality
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.report),
-                title: const Text('Report Issue'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // TODO: Navigate to report screen
-                },
+              const Divider(),
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildMedicalRecord(
+                      date: 'Mar 15, 2024',
+                      procedure: 'First Vaccination',
+                      notes: 'DHPP vaccine administered',
+                    ),
+                    _buildMedicalRecord(
+                      date: 'Feb 20, 2024',
+                      procedure: 'Initial Checkup',
+                      notes: 'General health assessment - All healthy',
+                    ),
+                    _buildMedicalRecord(
+                      date: 'Feb 10, 2024',
+                      procedure: 'Deworming',
+                      notes: 'Preventive deworming treatment',
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         );
       },
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+    );
+  }
+
+  Widget _buildMedicalRecord({
+    required String date,
+    required String procedure,
+    required String notes,
+  }) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      title: Text(
+        procedure,
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 4),
+          Text(notes),
+          const SizedBox(height: 4),
+          Text(
+            date,
+            style: const TextStyle(
+              color: Colors.grey,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+      leading: const CircleAvatar(
+        backgroundColor: Colors.orange,
+        child: Icon(
+          Icons.medical_services,
+          color: Colors.white,
+          size: 20,
+        ),
+      ),
     );
   }
 

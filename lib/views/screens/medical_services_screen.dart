@@ -48,14 +48,7 @@ class MedicalServicesScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                        ),
-                        child: const Text('Call Now'),
-                      ),
+                      const Text('+63 917 123 4567'),
                     ],
                   ),
                 ],

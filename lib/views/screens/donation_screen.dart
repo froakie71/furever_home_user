@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'donation_screen.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DonationScreen extends StatefulWidget {
   const DonationScreen({super.key});
@@ -10,6 +12,46 @@ class DonationScreen extends StatefulWidget {
 
 class _DonationScreenState extends State<DonationScreen> {
   final _formKey = GlobalKey<FormState>();
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _uploadImage() async {
+    try {
+      // Request permission first
+      final permissionStatus = await Permission.storage.request();
+
+      if (permissionStatus.isGranted) {
+        final XFile? pickedFile = await _picker.pickImage(
+          source: ImageSource.gallery,
+          maxWidth: 1800,
+          maxHeight: 1800,
+        );
+
+        if (pickedFile != null) {
+          setState(() {
+            _image = File(pickedFile.path);
+          });
+        }
+      } else {
+        throw Exception('Storage permission denied');
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 3),
+          action: SnackBarAction(
+            label: 'Retry',
+            textColor: Colors.white,
+            onPressed: _uploadImage,
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +85,7 @@ class _DonationScreenState extends State<DonationScreen> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 3,
+                    itemCount: 5,
                     itemBuilder: (context, index) {
                       return Card(
                         margin: const EdgeInsets.only(bottom: 8),
@@ -98,11 +140,20 @@ class _DonationScreenState extends State<DonationScreen> {
                                   color: Colors.grey[200],
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(
-                                  Icons.pets,
-                                  size: 50,
-                                  color: Colors.grey,
-                                ),
+                                child: _image != null
+                                    ? ClipOval(
+                                        child: Image.file(
+                                          _image!,
+                                          width: 120,
+                                          height: 120,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    : const Icon(
+                                        Icons.pets,
+                                        size: 50,
+                                        color: Colors.grey,
+                                      ),
                               ),
                               Positioned(
                                 bottom: 0,
@@ -117,9 +168,7 @@ class _DonationScreenState extends State<DonationScreen> {
                                       size: 18,
                                       color: Colors.white,
                                     ),
-                                    onPressed: () {
-                                      // TODO: Implement image picker
-                                    },
+                                    onPressed: _uploadImage,
                                   ),
                                 ),
                               ),
@@ -129,89 +178,16 @@ class _DonationScreenState extends State<DonationScreen> {
                         const SizedBox(height: 32),
                         TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'Pet Name',
+                            labelText: 'Amount',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            prefixIcon: const Icon(Icons.pets),
+                            prefixIcon: const Icon(Icons.attach_money),
                           ),
+                          keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter pet name';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Age',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  prefixIcon: const Icon(Icons.calendar_today),
-                                ),
-                                keyboardType: TextInputType.number,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter age';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Breed',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  prefixIcon: const Icon(Icons.category),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter breed';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Location',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            prefixIcon: const Icon(Icons.location_on),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter location';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          maxLines: 3,
-                          decoration: InputDecoration(
-                            labelText: 'Description',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            prefixIcon: const Icon(Icons.description),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter description';
+                              return 'Please enter amount';
                             }
                             return null;
                           },
@@ -259,15 +235,19 @@ class _DonationScreenState extends State<DonationScreen> {
       'Maria Santos',
       'John Smith',
       'Anna Garcia',
+      'Luis Cruz',
+      'Sarah Lee',
     ];
     return donators[index];
   }
 
   String _getDonationAmount(int index) {
     final amounts = [
-      '₱50,000 - 20 dogs helped',
-      '₱35,000 - 15 dogs helped',
-      '₱25,000 - 10 dogs helped',
+      '₱50,000',
+      '₱35,000',
+      '₱25,000',
+      '₱20,000',
+      '₱18,000',
     ];
     return amounts[index];
   }
@@ -277,6 +257,8 @@ class _DonationScreenState extends State<DonationScreen> {
       {'icon': Icons.stars, 'color': Colors.amber},
       {'icon': Icons.workspace_premium, 'color': Colors.grey},
       {'icon': Icons.volunteer_activism, 'color': Colors.brown},
+      {'icon': Icons.thumb_up, 'color': Colors.blue},
+      {'icon': Icons.favorite, 'color': Colors.pink},
     ];
 
     return Icon(
