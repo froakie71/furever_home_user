@@ -1,16 +1,55 @@
-# furever_home
+# Furever Home 🐾
 
-A new Flutter project.
+Furever Home is a mobile application designed to connect loving families with adoptable dogs in need of a forever home. Built with Flutter, this app provides an intuitive platform for users to browse, learn about, and adopt dogs from local shelters.
 
-## Getting Started
+## Features ✨
 
-This project is a starting point for a Flutter application.
+- 🐶 Browse available dogs with detailed profiles
+- 🔍 Search and filter dogs by breed, size, and age
+- 📋 Online adoption application form
+- 📅 View upcoming adoption events
+- 💖 Save favorite dogs for later
+- 📱 Responsive design for all screen sizes
+- 🌐 Real-time updates from shelters
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots 📸
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+| Home Screen | Dog Profile | Adoption Form |
+|-------------|-------------|---------------|
+| ![Home](screenshots/home.png) | ![Profile](screenshots/profile.png) | ![Form](screenshots/form.png) |
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Installation 🛠️
+
+### Prerequisites
+- Flutter SDK (version 3.0.0 or higher)
+- Dart SDK (version 2.17.0 or higher)
+- Android Studio or VS Code
+
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/furever-home.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd furever-home
+   ```
+3. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+4. Run the app:
+   ```bash
+   flutter run
+   ```
+
+## Tech Stack 💻
+
+- **Frontend**: Flutter
+- **State Management**: Provider
+- **API**: RESTful API
+- **Database**: Firebase Firestore
+- **Authentication**: Firebase Authentication
+- **Image Storage**: Firebase Storage
+
+## Folder Structure 📂
